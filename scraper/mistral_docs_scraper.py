@@ -192,8 +192,13 @@ class MistralDocsScraper:
         disallowed_paths = domain_config.get("disallowed_paths", [])
         selectors = domain_config.get("selectors", {})
         
+        # Normalize URL (remove trailing slash, etc.)
+        from urllib.parse import urlparse, urlunparse
+        parsed = urlparse(url)
+        normalized_url = urlunparse(parsed._replace(path=parsed.path.rstrip('/') or '/'))
+        
         # Check if already scraped
-        if url in self.scraped_pages:
+        if normalized_url in self.scraped_pages:
             self.logger.debug(f"Already scraped: {url}")
             return None
         
@@ -236,8 +241,8 @@ class MistralDocsScraper:
             format = output_config.get("format", "jsonl")
             self._save_processed(data, format)
         
-        # Mark as scraped
-        self.scraped_pages.add(url)
+        # Mark as scraped (using normalized URL)
+        self.scraped_pages.add(normalized_url)
         
         self.logger.info(f"Successfully scraped: {url}")
         return data

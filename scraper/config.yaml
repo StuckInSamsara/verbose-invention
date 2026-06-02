@@ -53,12 +53,12 @@ domains:
 
 # Scraping settings
 scraping:
-  delay: 0.5  # Seconds between requests
-  max_depth: 2 # Max depth for recursive scraping
+  delay: 1.0  # Seconds between requests (respectful crawling)
+  max_depth: 3 # Max depth for recursive scraping
   user_agent: "MistralDocsScraper/1.0 (+https://github.com/StuckInSamsara/verbose-invention)"
-  timeout: 10  # Request timeout in seconds
+  timeout: 15  # Request timeout in seconds
   retries: 3   # Number of retries for failed requests
-  max_pages: 50 # Maximum pages to scrape per run (for testing)
+  max_pages: 500 # Maximum pages to scrape per run
 
 # Output settings
 output:
